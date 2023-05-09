@@ -22,14 +22,14 @@ def  main():
         print('\nEthernet frame:')
         print(TAB_1 + 'Destination: {}, Source {}, Protocol: {}'.format(dest_mac, src_mac, eth_proto))
         
-        #8 means we are looking at IPv4 
+        #If etherenet frame protocol = 8 its IPv4 packet
         if eth_proto == 8:
             (version, header_length, ttl, proto, src, target, data) = ipv4_packet(data)
             print(TAB_1 + 'IPv4:')
             print(TAB_2 + 'Version: {}, Header Length: {}, TTL: {}'.format(version,header_length,ttl))
             print(TAB_2 + 'Protocol: {}, Source: {}, Target: {}'.format(proto, src, target))
             
-            # 1 means ICMP Packet(Internet Control Message Protocol)
+            #If IPv4 protocol = 1 its ICMP Packet (Internet Control Message Protocol)
             if proto == 1:
                 icmp_type, code, checksum, data = icmp_packet(data)
                 print(TAB_1 + 'ICMP Packet:')
@@ -37,18 +37,18 @@ def  main():
                 print(TAB_2 + 'Data:')
                 print(format_multi_line(DATA_TAB_3, data))
             
-            #6 means its a TCP Packet (Transmission Control Protocol)
+            #If IPv4 protocol = 6 its TCP packet (Transmission Control Protocol)
             elif proto == 6:
-                (src_port, dest_port, sequence, ackmowledgment, flag_urg, flag_ack, flag_psh, flag_rst, flag_syn, flag_fin, data) = TCP_Packet(data)
+                (src_port, dest_port, sequence, ack, flag_urg, flag_ack, flag_psh, flag_rst, flag_syn, flag_fin, data) = TCP_Packet(data)
                 print(TAB_1 + 'TCP Pakcet:')
                 print(TAB_2 + 'Source Port: {}, Destination Port: {}'.format(src_port, dest_port))
-                print(TAB_2 + 'Sequence: {}, Acknowledgment: {}'.format(sequence, ackmowledgment))
+                print(TAB_2 + 'Sequence: {}, Acknowledgment: {}'.format(sequence, ack))
                 print(TAB_2 + 'Flags:')
                 print(TAB_3 + 'URG: {}, ACK: {}, PSH: {}, RST: {}, SYN: {}, FIN: {}'.format(flag_urg, flag_ack, flag_psh, flag_rst, flag_syn, flag_fin))
                 print(TAB_2 + 'Data:')
                 print(format_multi_line(DATA_TAB_3, data))
                 
-            #17 means its a UDP Packet (User Diragram Protocol)
+            #If IPv4 protocol is 17 its UDP packet (User Diragram Protocol)
             elif proto == 17:
                 src_port, dest_port, Length, data = udp_packet(data)
                 print(TAB_1 + 'UDP Packet:')
@@ -56,7 +56,7 @@ def  main():
                 print(TAB_2 + 'Data:')
                 print(format_multi_line(DATA_TAB_3, data))
             
-            #Other
+            #If an unknown packet is captured
             else:
                 print(TAB_1 + 'Unknown Packet:')
                 print(TAB_2 + 'Data:')
@@ -70,12 +70,12 @@ def  main():
 #unpack ethernet frame
 def ethernet_frame(data):
     dest_mac, src_mac, proto = struct.unpack('! 6s 6s H', data[:14])
-    return get_mac_addr(dest_mac), get_mac_addr(src_mac), socket.htons(proto), data[14:]
+    return MAC_formatting(dest_mac), MAC_formatting(src_mac), socket.htons(proto), data[14:]
             
 
 
 #formatting MAC address (ie: AA:BB:CC:DD:EE:FF)
-def get_mac_addr(bytes_addr):
+def MAC_formatting(bytes_addr):
     bytes_str = map('{:02x}'.format, bytes_addr)
     return ':'.join(bytes_str).upper()    
 
@@ -86,11 +86,11 @@ def ipv4_packet(data):
     version = version_header_length >> 4
     header_length = (version_header_length & 15) * 4
     ttl, proto, src, target = struct.unpack('! 8x B B 2x 4s 4s', data[:20])
-    return version, header_length, ttl, proto, ipv4(src), ipv4(target), data[header_length:]
+    return version, header_length, ttl, proto, ipv4_formatting(src), ipv4_formatting(target), data[header_length:]
 
 
 #returns formatted IPv4 address (ie: 192.168.0.1)
-def ipv4(addr):
+def ipv4_formatting(addr):
     return '.'.join(map(str,addr))
     
 
@@ -101,7 +101,7 @@ def icmp_packet(data):
 
 #Unpack TCP Packet (Transmission Control Protocol)    
 def TCP_Packet(data):
-    (src_port, dest_port, sequence, acknowledgment, offset_reseved_flags) = struct.unpack('! H H L L H', data[:14])
+    (src_port, dest_port, sequence, ack, offset_reseved_flags) = struct.unpack('! H H L L H', data[:14])
     offset = (offset_reseved_flags >> 12) * 4
     flag_urg = (offset_reseved_flags & 32) >> 5  
     flag_ack = (offset_reseved_flags & 16) >> 4
@@ -109,15 +109,15 @@ def TCP_Packet(data):
     flag_rst = (offset_reseved_flags & 4) >> 2
     flag_syn = (offset_reseved_flags & 2) >> 1
     flag_fin =  offset_reseved_flags & 1
-    return src_port, dest_port, sequence, acknowledgment, flag_urg, flag_ack, flag_psh, flag_rst, flag_syn, flag_fin, data[offset:]
+    return src_port, dest_port, sequence, ack, flag_urg, flag_ack, flag_psh, flag_rst, flag_syn, flag_fin, data[offset:]
 
 #unpacking udp packets (User Datagram Protocol)
-def udp_packet(data):
+def UDP_packet(data):
     src_port, dest_port, size = struct.unpack('! H H 2x H', data[:8])
     return src_port, dest_port, size, data[8:]
 
 
-#format multi-line data, found online
+#format multi-line data
 def format_multi_line(prefix, string, size=80):
     size -= len(prefix)
     if isinstance(string, bytes):
