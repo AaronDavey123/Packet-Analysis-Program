@@ -1,10 +1,14 @@
-# Packet-Analysis-Program
-This is the code for my final year project at Brighton University. It captures analyses and displays 
-- TCP 
-- UDP  
-- ICMP 
+**Packet Analysis Program
+Overview**
 
-Network data packets
+The Packet Analysis Program is a tool designed for analyzing network traffic. It captures, inspects, and interprets data packets sent over a network, providing valuable insights for network troubleshooting, security analysis, and research. Whether you are a cybersecurity professional, network engineer, or developer, this program helps you understand network behavior at a granular level.
 
-This program was built within a Kali Linux environment. To run this program, install an IDE and use the correct terminal command to run the Python File
+**Features**
+
+**Real-time Packet Capture:** Monitor live network traffic in real-time.
+
+**Protocol Analysis:** Supports analysis of various protocols such as TCP, UDP, ICMP, ARP, and more.
+
+**Traffic Visualization:** Visualize packet data for easier interpretation and analysis.
+
 
