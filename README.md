@@ -1,18 +1,35 @@
-**Packet Analysis Program
-Overview**
+# Pack Analysis Program
 
-The Packet Analysis Program is a tool designed for analyzing network traffic. It captures, inspects, and interprets data packets sent over a network, providing valuable insights for network troubleshooting, security analysis, and research. Whether you are a cybersecurity professional, network engineer, or developer, this program helps you understand network behavior at a granular level.
+A network traffic analysis tool that analyzes and unpacks ICMP, UDP, and TCP data packets, providing insights into network performance and security.
 
-**Features**
+## Table of Contents
+- [Installation](#installation)
+- [Usage](#usage)
+- [Features](#features)
+- [Contributing](#contributing)
+- [License](#license)
 
-**Real-time Packet Capture:** Monitor live network traffic in real-time.
+## Installation
 
-**Protocol Analysis:** Supports analysis of various protocols such as TCP, UDP, ICMP, ARP, and more.
+To install the Pack Analysis Program, follow these steps:
 
-**Traffic Visualization:** Visualize packet data for easier interpretation and analysis.
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/AaronDavey123/pack-analysis-program.
+
+2. Navigate to the project directory
+   cd pack-analysis-program
 
 
+## Usage
 
-Disclaimer: This code is provided for educational and research purposes only. The tools and scripts are intended to help developers and cybersecurity professionals understand and improve security practices. Misuse of this code for illegal activities is strictly prohibited. The author is not responsible for any damage or legal issues caused by the improper use of this code.
+1. python3 pack-analysis-program.py
 
+
+## Features
+**Packet Analysis: ** Supports unpacking and analyzing ICMP, UDP, and TCP packets.
+
+**Traffic Insights: ** Provides insights into network performance and potential security issues.
+
+**User-Friendly Interface: ** Simple command-line interface for ease of use.
 
