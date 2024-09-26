@@ -27,9 +27,7 @@ To install the Pack Analysis Program, follow these steps:
 
 
 ## Features
-**Packet Analysis: ** Supports unpacking and analyzing ICMP, UDP, and TCP packets.
-
-**Traffic Insights: ** Provides insights into network performance and potential security issues.
-
-**User-Friendly Interface: ** Simple command-line interface for ease of use.
+Packet Analysis: Supports unpacking and analyzing ICMP, UDP, and TCP packets.
+Traffic Insights: Provides insights into network performance and potential security issues.
+User-Friendly Interface: Simple command-line interface for ease of use.
 
