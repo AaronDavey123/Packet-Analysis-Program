@@ -2,14 +2,14 @@
 
 A network traffic analysis tool that analyzes and unpacks ICMP, UDP, and TCP data packets, providing insights into network performance and security.
 
-## Table of Contents
+## 📊 Table of Contents
 - [Installation](#installation)
 - [Usage](#usage)
 - [Features](#features)
 - [Contributing](#contributing)
 - [License](#license)
 
-## Installation
+## 📄 Installation
 
 To install the Pack Analysis Program, follow these steps:
 
@@ -21,7 +21,7 @@ To install the Pack Analysis Program, follow these steps:
    cd pack-analysis-program
 
 
-## Usage
+## 🚀 Usage
 
 1. python3 pack-analysis-program.py
 
